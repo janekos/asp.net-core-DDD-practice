@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Add participant";
+}
+
+@model FirmPartyGoerViewModel;
+
+<div id="adderContentWrapper" class="container">
+    <div id="adderHeader" class="container">
+        <div id="pageName">
+            <h1>Add participant</h1>
+        </div>
+    </div>
+    <div class="myForm">
+        <form class="formItself" asp-action="AddFirmPartyGoer/@ViewData["partyId"]" asp-controller="Party">
+            <h2>Add participant</h2>
+            <div class="form-group">
+                <label for="goerType">Participant type</label>
+                <select id="goerType" class="form-control">
+                    <option>Firm</option>
+                    <option>Person</option>
+                </select>
+                <br />
+            </div>
+            <div class="form-group">
+                <label asp-for="name">Firm name</label>
+                <input class="form-control d-inline" asp-for="name" placeholder="Insert firm name">
+                <br />
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorName"];">
+                    <span>@Html.ValidationMessageFor(model => model.name)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="firmNumber">Firm register number</label>
+                <input class="form-control d-inline" asp-for="firmNumber" placeholder="Insert firm register number" type="number">
+                <br />
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorFirmNumber"];">
+                    <span>@Html.ValidationMessageFor(model => model.firmNumber)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="firmParticipants">No. of participants from firm</label>
+                <input class="form-control d-inline" asp-for="firmParticipants" placeholder="1" type="number">
+                <br />
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorFirmParticipants"];">
+                    <span>@Html.ValidationMessageFor(model => model.firmParticipants)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="paymentType">Payment type</label>
+                <select asp-for="paymentType" class="form-control">
+                    <option value="0">Bank transfer</option>
+                    <option value="1">Cash</option>
+                </select>
+                <br />
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorPaymentType"];">
+                    <span>@Html.ValidationMessageFor(model => model.paymentType)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="extraInfo">Extra info</label>
+                <textarea class="form-control d-inline" asp-for="extraInfo" placeholder="Extra info"></textarea>
+                <br />
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorExtraInfo"];">
+                    <span>@Html.ValidationMessageFor(model => model.extraInfo)</span>
+                </div>
+            </div>
+            <br />
+            <input type="hidden" asp-for="partyRefId" value="@ViewData["partyId"]" />
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:window.location.href = window.location.href.replace(/(Party\/AddFirmPartyGoer)(.*)/g, 'Party');">Back</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById("goerType").addEventListener("change", function (e) {
+        window.location.href = window.location.href.replace(/(AddFirmPartyGoer)(.*)/g, "AddPersonPartyGoer/@ViewData["partyId"]");
+    });
+</script>

@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ddd_asp_practice</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" runat="server"/>
+        <link rel="stylesheet" href="~/css/site.css" runat="server"/>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <div id="navbar" class="container" style="padding: 0px !important;">
+        <div id="navLeftContent">
+            <img src="~/images/logo.svg" alt="Logo" height="50px" />
+            <a id="homeButton" asp-controller="Party" asp-action="Index">Home</a>
+            <a id="addPartyButton" asp-controller="Party" asp-action="AddParty">Add party</a>
+        </div>
+        <div id="navRightContent">
+            <img src="~/images/logo.svg" alt="Logo" height="50px" />
+        </div>
+    </div>
+    <div id="mainContent" class="container" style="padding: 0px !important;">
+        @RenderBody()
+    </div>
+
+    <div id="footer" class="container">
+        <div id="curabitur">
+            <ul>
+                <li><h2>Curabitur</h2></li>
+                <li>Emauris</li>
+                <li>Kfringilla</li>
+                <li>Oin magna sem</li>
+                <li>Kelementum</li>
+            </ul>
+        </div>
+        <div id="fusce">
+            <ul>
+                <li><h2>Fusce</h2></li>
+                <li>Econsectetur</li>
+                <li>Ksollicitudin</li>
+                <li>Omvulputante</li>
+                <li>Nunc fringilla sellu</li>
+            </ul>
+        </div>
+        <div id="kontakt">
+            <ul>
+                <li><h2>Contact</h2></li>
+                <li><strong>Country: Foobar</strong></li>
+                <li>Foobar street 1, 11111 Foo</li>
+                <li>Telephone: 111 1111</li>
+                <li>Fax: 111 1111</li>
+            </ul>
+        </div>
+        <div id="kontakt2">
+            <ul>
+                <li><h2>&#xfeff;</h2></li>
+                <li><strong>Country: Barfoo</strong></li>
+                <li>Barfoo street 2, 22222 Bar</li>
+                <li>Telephone: 222 2222</li>
+                <li>Fax: 222 2222</li>
+            </ul>
+        </div>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

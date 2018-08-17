@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+}
+@model Tuple<List<PartyViewModel>, List<PartyViewModel>>
+
+<div id="aboveTable" class="container">
+    <div id="leftPart">
+        Sed nec elit vestibulum, <strong>Tincidunt orci</strong> et, sagittis ex. Vestibulum rutrum <strong>neque suscipit</strong> ante mattis maximus. Nulla non sapien <strong>viverra, lobortis lorem non</strong>, accumsan metus.
+    </div>
+    <img id="rightPart" src="~/images/pilt.jpg" alt="Pilt" />
+</div>
+<div id="indexTableWrapper">
+    <div class="my-table">
+        <div class="table-name-container">
+            <h3>Coming parties</h3>
+        </div>
+        <table id="comingParties" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Party date</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Participants</th>
+                    <th scope="col">Add participant</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Item1.Count > 0) {
+                    @foreach (PartyViewModel item in Model.Item1) {
+                        if (item.deleted == 0) {
+                            <tr>
+                                <td>
+                                    <a href="Party/PartyGoers/@item.id">@item.name</a>
+                                </td>
+                                <td>@item.date</td>
+                                <td>@item.location</td>
+                                <td>@item.participants</td>
+                                <td>
+                                    <form asp-action="AddPersonPartyGoer/@item.id" asp-controller="Party" method="get">
+                                        <input type="submit" class="btn btn-primary" name="submit" value="Add" />
+                                    </form>
+                                </td>
+                                <td>
+                                    <form asp-action="DeleteParty/@item.id" asp-controller="Party" method="get">
+                                        <input type="submit" class="btn btn-danger" name="submit" value="X" />
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+                else {
+                    <tr><td colspan="6">No coming parties.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="my-table">
+        <div class="table-name-container">
+            <h3>Previous parties</h3>
+        </div>
+        <table id="prevParties" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Party date</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Participants</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Item2.Count > 0) {
+                    @foreach (PartyViewModel item in Model.Item2) {
+                        if (item.deleted == 0) {
+                            <tr>
+                                <td>
+                                    <a href="Party/PartyGoers/@item.id">@item.name</a>
+                                </td>
+                                <td>@item.date</td>
+                                <td>@item.location</td>
+                                <td>@item.participants</td>
+                            </tr>
+                        }
+                    }
+                } else {
+                    <tr><td colspan="6">No previous parties.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

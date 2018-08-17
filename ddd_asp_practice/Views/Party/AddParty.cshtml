@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Add party";
+}
+@model PartyViewModel;
+
+<div id="adderContentWrapper" class="container">
+    <div id="adderHeader" class="container">
+        <div id="pageName">
+            <h1>Add party</h1>
+        </div>
+    </div>
+    <div class="myForm">
+        <form class="formItself" asp-action="AddParty" asp-controller="Party">
+            <h2>Add party</h2>
+            <div class="form-group">
+                <label asp-for="name">Party name</label>
+                <input id="partyName" class="form-control d-inline" asp-for="name" placeholder="Insert party name">
+                </br>
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorName"];">
+                    <span>@Html.ValidationMessageFor(model => model.name)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="date">Party date</label>
+                <input id="partyDate" type="datetime-local" class="form-control" asp-for="date" value="@ViewData["currTime"]">
+                </br>
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorDate"];">
+                    <span>@Html.ValidationMessageFor(model => model.date)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="location">Party location</label>
+                <input id="partyLocation" type="text" class="form-control" asp-for="location" placeholder="Insert party location">
+                </br>
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorLocation"];">
+                    <span>@Html.ValidationMessageFor(model => model.location)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="extraInfo">Extra info</label>
+                <textarea id="partyExtraInfo" class="form-control vresize" asp-for="extraInfo" value=""></textarea>
+                </br>
+                <div class="alert alert-danger d-inline" style="width: auto; display: @ViewData["errorExtraInfo"];">
+                    <span>@Html.ValidationMessageFor(model => model.extraInfo)</span>
+                </div>
+            </div>
+            </br>
+            <button id="submitPartyForm" type="submit" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-danger" onclick="javascript:history.back();">Back</button>
+        </form>
+    </div>
+</div>
+

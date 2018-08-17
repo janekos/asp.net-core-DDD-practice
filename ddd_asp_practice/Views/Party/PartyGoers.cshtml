@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewData["Title"] = "Participants";
+}
+
+@model Tuple<List<PersonPartyGoerViewModel>, List<FirmPartyGoerViewModel>>;
+
+
+<div id="adderContentWrapper" class="container">
+    <div id="adderHeader" class="container">
+        <div id="pageName">
+            <h1>"@ViewData["partyName"]" party participants</h1>
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary" onclick="relocate()">Add participants</button>
+    <button class="btn btn-danger" onclick="javascript:window.location.href = window.location.href.replace(/(Party\/PartyGoers)(.*)/g, 'Party');">Back home</button>
+    <div class="container" style="text-align:center; padding-left: 0px !important; padding-right: 0px !important;">
+        <div>
+            <br />
+            <div class="table-name-container">
+                <h3>Participating people</h3>
+            </div>
+            <div class="my-goers-table">
+                <table id="participatingPersons" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Personal code</th>
+                            <th scope="col">Payment type</th>
+                            <th scope="col">Extra info</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Item1.Where(participants => participants.deleted == 0).ToArray().Length > 0) {
+                            @foreach (PersonPartyGoerViewModel item in Model.Item1) {
+                                if (item.deleted == 0) {
+                                    <tr>
+                                        <td>@item.name</td>
+                                        <td>@item.surname</td>
+                                        <td>@item.personalCode</td>
+                                        <td>
+                                            @if (item.paymentType == 0) {<span>Bank transfer</span>}
+                                            else {<span>Cash</span>}
+                                        </td>
+                                        <td>@item.extraInfo</td>
+                                        <td>
+                                            <form asp-action="EditPersonPartyGoer/@item.id" asp-controller="Party" method="get">
+                                                <input type="submit" class="btn btn-warning" name="submit" value="Edit" />
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger" onclick="deleteParticipant(0, @item.id)">X</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                        else {
+                            <tr><td colspan="6">No persons participating.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="my-goers-table">
+                <br />
+                <div class="table-name-container">
+                    <h3>Participating firms</h3>
+                </div>
+                <table id="participatingFirms" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Firm name</th>
+                            <th scope="col">Firm register code</th>
+                            <th scope="col">No. participants from firm</th>
+                            <th scope="col">Payment type</th>
+                            <th scope="col">Extra info</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model.Item2.Where(participants => participants.deleted == 0).ToArray().Length > 0) {
+                            @foreach (FirmPartyGoerViewModel item in Model.Item2) {
+                                if (item.deleted == 0) {
+                                    <tr>
+                                        <td>@item.name</td>
+                                        <td>@item.firmNumber</td>
+                                        <td>@item.firmParticipants</td>
+                                        <td>
+                                            @if (item.paymentType == 0) {<span>Bank transfer</span>}
+                                            else {<span>Cash</span>}
+                                        </td>
+                                        <td>@item.extraInfo</td>
+                                        <td>
+                                            <form asp-action="EditFirmPartyGoer/@item.id" asp-controller="Party" method="get">
+                                                <input type="submit" class="btn btn-warning" name="submit" value="Edit" />
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger" onclick="deleteParticipant(1, @item.id)">X</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                        else {
+                            <tr><td colspan="6">No firms going to this party.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function relocate() {
+        window.location.href = window.location.href.replace(/(Party\/PartyGoers)(.*)/g, 'Party/AddPersonPartyGoer/@ViewData["partyId"]');
+    }
+
+    function deleteParticipant(which, id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                    location.reload();
+            }
+        };
+        if (which == 0) { xhttp.open("GET", window.location.href.replace(/(Party\/PartyGoers)(.*)/g, 'Party/DeletePersonPartyGoer/'+id), true); }
+        else { xhttp.open("GET", window.location.href.replace(/(Party\/PartyGoers)(.*)/g, 'Party/DeleteFirmPartyGoer/' + id), true); }
+        xhttp.send();
+    }
+</script>

@@ -1,0 +1,36 @@
+create table db.parties (
+	id integer primary key not null,
+	name text not null,
+	date text not null,
+	location text not null,
+	extra_info text,
+	date_added text,
+	date_deleted text,
+	deleted integer
+);
+
+create table db.firm_party_goers (
+	id integer primary key not null,
+	party_ref_id integer not null,
+	name text not null,
+	firm_number integer not null,
+	firm_participants integer not null,
+	payment_type integer not null,
+	extra_info text,
+	date_added text,
+	date_deleted text,
+	deleted integer
+);
+
+create table db.person_party_goers (
+	id integer primary key not null,
+	party_ref_id integer not null,
+	name text not null,
+	surname text not null,
+	personal_code integer not null,
+	payment_type integer not null,
+	extra_info text,
+	date_added text,
+	date_deleted text,
+	deleted integer
+);
